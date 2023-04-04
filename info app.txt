@@ -1,0 +1,13 @@
+Page: Home, chat, profile, log/sign in
+
+Chat: Chat berlangsung, chat sudah selesai, chat belum direspon
+    note:   - chat on going -> saat chat ditutup, riwayat chat tetap ada
+            - 1 on going chat = 1 customer dan 1 tax consultant yang sama
+            - chat filter
+
+Add-on: splash screen, premium subscription button
+
+user role: customer, admin, tax consultant
+    note:   - customer bisa request chat
+            - tax consultant bisa memilih request chat,
+            - admin
