@@ -73,9 +73,6 @@ class _LoginpageFormState extends State<LoginpageForm> {
             ),
           ),
         ),
-        const SizedBox(
-          height: 20,
-        ),
         TextField(
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(horizontal: 10),
@@ -102,9 +99,6 @@ class _LoginpageFormState extends State<LoginpageForm> {
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
         Row(
           children: [
             GestureDetector(
@@ -118,9 +112,6 @@ class _LoginpageFormState extends State<LoginpageForm> {
             ),
           ],
         ),
-        const SizedBox(
-          height: 20,
-        ),
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
@@ -131,9 +122,6 @@ class _LoginpageFormState extends State<LoginpageForm> {
             child: const Text('Log In'),
           ),
         ),
-        const SizedBox(
-          height: 20,
-        ),
         Container(
           height: 1,
           width: double.infinity,
@@ -142,9 +130,6 @@ class _LoginpageFormState extends State<LoginpageForm> {
               color: Colors.grey,
             ),
           ),
-        ),
-        const SizedBox(
-          height: 30,
         ),
         ElevatedButton(
           onPressed: () async {

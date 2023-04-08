@@ -19,16 +19,15 @@ class HomePage extends StatelessWidget {
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        toolbarHeight: 70,
         backgroundColor: Colors.deepOrange,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             CircleAvatar(
-              radius: 28,
+              radius: 20,
               backgroundColor: Colors.white,
               child: CircleAvatar(
-                radius: 26,
+                radius: 18,
                 backgroundImage: NetworkImage(user.image),
               ),
             ),
@@ -42,10 +41,13 @@ class HomePage extends StatelessWidget {
                       style: TextStyle(fontSize: 16),
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Text(
-                      user.name,
-                      style: const TextStyle(fontSize: 16),
-                      overflow: TextOverflow.ellipsis,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: Text(
+                        user.name,
+                        style: const TextStyle(fontSize: 16),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),

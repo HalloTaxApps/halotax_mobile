@@ -24,18 +24,18 @@ class ChatSectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: 70,
         backgroundColor: Colors.deepOrange,
-        titleSpacing: 10,
+        titleSpacing: 0,
         title: Row(
           children: [
             CircleAvatar(
-              radius: 28,
+              radius: 20,
               backgroundColor: Colors.white,
               child: CircleAvatar(
-                radius: 26,
+                radius: 18,
                 backgroundImage: NetworkImage(
                   friendImage,
                 ),
@@ -98,16 +98,18 @@ class ChatSectionPage extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
             width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: 75,
             decoration: const BoxDecoration(
               color: Color.fromRGBO(255, 157, 127, 1),
             ),
-            child: ChatsectionTexfield(
-              user: currentUser,
-              currentId: currentUser.uid,
-              friendId: friendId,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ChatsectionTexfield(
+                user: currentUser,
+                currentId: currentUser.uid,
+                friendId: friendId,
+              ),
             ),
           ),
         ],

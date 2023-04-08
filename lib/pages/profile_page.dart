@@ -21,13 +21,16 @@ class ProfilePage extends StatelessWidget {
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        toolbarHeight: 70,
         backgroundColor: Colors.deepOrange,
         title: Row(
           children: [
-            const Text('Hi, '),
+            const Text(
+              'Hi, ',
+              style: TextStyle(fontSize: 16),
+            ),
             Text(
               user.name,
+              style: const TextStyle(fontSize: 16),
             ),
           ],
         ),
@@ -45,31 +48,27 @@ class ProfilePage extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => const MyApp()),
                       (route) => false);
                 },
-                icon: const Icon(Icons.logout_outlined),
+                icon: const Icon(
+                  Icons.logout_outlined,
+                  size: 20,
+                ),
               )
             ],
           )
         ],
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: Colors.grey[200],
-        ),
-        child: ListView(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ProfileContainer(
-                  user: user,
-                ),
-                const ProfileFitur(),
-              ],
-            )
-          ],
-        ),
+      body: ListView(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ProfileContainer(
+                user: user,
+              ),
+              const ProfileFitur(),
+            ],
+          )
+        ],
       ),
     );
   }

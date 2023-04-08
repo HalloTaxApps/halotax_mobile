@@ -69,6 +69,7 @@ flutter:
   assets:
     - assets/images/taxlogo.png
     - assets/images/googleGlogo.png
+    - assets/images/hijabWork.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

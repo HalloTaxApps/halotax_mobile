@@ -7,18 +7,10 @@ class ChatpageTextfield extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: const [
-            SizedBox(),
-          ],
-        ),
-        const SizedBox(
-          height: 20,
-        ),
         Container(
           height: MediaQuery.of(context).size.height * 0.33,
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.orange),
+            border: Border.all(color: Colors.deepOrange),
             borderRadius: BorderRadius.circular(10),
           ),
           child: const TextField(

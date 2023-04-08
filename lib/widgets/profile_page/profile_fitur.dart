@@ -8,8 +8,7 @@ class ProfileFitur extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           height: 75,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -22,25 +21,30 @@ class ProfileFitur extends StatelessWidget {
             ],
             color: Colors.white,
           ),
-          child: Row(
-            children: const [
-              Expanded(
-                child: Text(
-                  'Riwayat Akun',
-                  style: TextStyle(
-                    fontSize: 16,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: const [
+                Expanded(
+                  child: Text(
+                    'Riwayat Akun',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                 ),
-              ),
-              Icon(
-                Icons.arrow_forward_outlined,
-              ),
-            ],
+                Icon(
+                  Icons.arrow_forward_outlined,
+                ),
+              ],
+            ),
           ),
         ),
+        const SizedBox(
+          height: 10,
+        ),
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           height: 75,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -53,20 +57,23 @@ class ProfileFitur extends StatelessWidget {
             ],
             color: Colors.white,
           ),
-          child: Row(
-            children: const [
-              Expanded(
-                child: Text(
-                  'Kelola Langganan Premium',
-                  style: TextStyle(
-                    fontSize: 16,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: const [
+                Expanded(
+                  child: Text(
+                    'Kelola Langganan Premium',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                 ),
-              ),
-              Icon(
-                Icons.arrow_forward_outlined,
-              ),
-            ],
+                Icon(
+                  Icons.arrow_forward_outlined,
+                ),
+              ],
+            ),
           ),
         ),
       ],

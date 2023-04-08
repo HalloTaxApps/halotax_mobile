@@ -25,69 +25,37 @@ class _ChatPageState extends State<ChatPage> {
         user: widget.user,
       ),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        toolbarHeight: 70,
+        titleSpacing: 0,
         backgroundColor: Colors.deepOrange,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            CircleAvatar(
-              radius: 28,
-              backgroundColor: Colors.white,
-              child: CircleAvatar(
-                radius: 26,
-                backgroundImage: NetworkImage(widget.user.image),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  widget.user.name,
-                  style: const TextStyle(fontSize: 16),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            )
-          ],
+        title: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Text(
+            'Consultant Chat',
+            style: TextStyle(fontSize: 16),
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => StatusChatPage(
-                            user: widget.user,
-                          )));
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Row(
-                children: const [
-                  Text(
-                    'Status Chat',
-                    style: TextStyle(fontSize: 16),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Icon(
-                    Icons.mail_outlined,
-                    color: Colors.white,
-                  )
-                ],
+        actions: const [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Center(
+              child: Text(
+                'Premium',
               ),
             ),
-          )
+          ),
         ],
       ),
-      body: Container(
-        margin: const EdgeInsets.all(20),
-        child: ListView(
-          children: [
-            Align(
+      body: ListView(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Align(
               alignment: Alignment.topLeft,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.67,
@@ -100,10 +68,10 @@ class _ChatPageState extends State<ChatPage> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Align(
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+            child: Align(
               alignment: Alignment.topLeft,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.75,
@@ -115,10 +83,10 @@ class _ChatPageState extends State<ChatPage> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Align(
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Align(
               alignment: Alignment.topLeft,
               child: Container(
                 width: 150,
@@ -160,12 +128,12 @@ class _ChatPageState extends State<ChatPage> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            const ChatpageTextfield(),
-          ],
-        ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: ChatpageTextfield(),
+          ),
+        ],
       ),
     );
   }

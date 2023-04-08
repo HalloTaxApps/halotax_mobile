@@ -11,7 +11,6 @@ class _StatuschatAppbarState extends State<StatuschatAppbar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      toolbarHeight: 67,
       backgroundColor: Colors.deepOrange,
       titleSpacing: 0,
       title: Row(
