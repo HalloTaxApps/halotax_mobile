@@ -13,8 +13,6 @@ class BerlangsungPage extends StatefulWidget {
 }
 
 class _BerlangsungPageState extends State<BerlangsungPage> {
-  bool isSearch = false;
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -43,40 +41,47 @@ class _BerlangsungPageState extends State<BerlangsungPage> {
                 builder: (context, AsyncSnapshot asyncSnapshot) {
                   if (asyncSnapshot.hasData) {
                     var friend = asyncSnapshot.data;
-                    return ListTile(
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(80),
-                        child: CachedNetworkImage(
-                          imageUrl: friend['image'],
-                          placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                          height: 50,
-                        ),
-                      ),
-                      title: Text(friend['name']),
-                      subtitle: Text(
-                        "$lastMsg",
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChatSectionPage(
-                              currentUser: widget.user,
-                              friendId: friendId,
-                              friendName: friend['name'],
-                              friendImage: friend['image'],
+                    return friend['role'] == 'Consultant'
+                        ? ListTile(
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(80),
+                              child: CachedNetworkImage(
+                                imageUrl: friend['image'],
+                                placeholder: (context, url) =>
+                                    const CircularProgressIndicator(),
+                                height: 50,
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    );
+                            title: Text(friend['name']),
+                            subtitle: Text(
+                              "$lastMsg",
+                              // '',
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatSectionPage(
+                                    currentUser: widget.user,
+                                    friendId: friendId,
+                                    friendName: friend['name'],
+                                    friendImage: friend['image'],
+                                  ),
+                                ),
+                              );
+                            },
+                          )
+                        : const SizedBox();
                   }
-                  return const LinearProgressIndicator();
+                  return const LinearProgressIndicator(
+                    color: Colors.transparent,
+                    backgroundColor: Colors.transparent,
+                    minHeight: 1,
+                  );
                 },
               );
             },
@@ -87,121 +92,5 @@ class _BerlangsungPageState extends State<BerlangsungPage> {
         );
       },
     );
-    // return ListView(
-    //   children: [
-    //     Column(
-    //       children: [
-    //         Padding(
-    //           padding: const EdgeInsets.all(10),
-    //           child: Row(
-    //             mainAxisAlignment: MainAxisAlignment.start,
-    //             crossAxisAlignment: CrossAxisAlignment.start,
-    //             children: [
-    //               const CircleAvatar(
-    //                 radius: 36,
-    //                 backgroundColor: Colors.white,
-    //                 child: CircleAvatar(
-    //                   radius: 34,
-    //                   backgroundImage:
-    //                       NetworkImage('https://i.pravatar.cc/100?u=ryunosuke'),
-    //                 ),
-    //               ),
-    //               const SizedBox(
-    //                 width: 20,
-    //               ),
-    //               Padding(
-    //                 padding: const EdgeInsets.only(top: 10),
-    //                 child: Column(
-    //                   mainAxisAlignment: MainAxisAlignment.start,
-    //                   crossAxisAlignment: CrossAxisAlignment.start,
-    //                   children: [
-    //                     SizedBox(
-    //                       width: MediaQuery.of(context).size.width * 0.55,
-    //                       child: const Text(
-    //                         'Drs. Ryunosuke Putra Alam',
-    //                         style: TextStyle(
-    //                           fontSize: 16,
-    //                           fontWeight: FontWeight.bold,
-    //                           overflow: TextOverflow.ellipsis,
-    //                         ),
-    //                       ),
-    //                     ),
-    //                     const SizedBox(
-    //                       height: 10,
-    //                     ),
-    //                     SizedBox(
-    //                       width: MediaQuery.of(context).size.width * 0.33,
-    //                       child: const Text(
-    //                         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni excepturi omnis velit! Laborum voluptates dignissimos quis ipsum. Nisi, soluta hic.',
-    //                         style: TextStyle(
-    //                           color: Colors.grey,
-    //                           overflow: TextOverflow.ellipsis,
-    //                         ),
-    //                       ),
-    //                     ),
-    //                   ],
-    //                 ),
-    //               )
-    //             ],
-    //           ),
-    //         ),
-    //         Padding(
-    //           padding: const EdgeInsets.all(10),
-    //           child: Row(
-    //             mainAxisAlignment: MainAxisAlignment.start,
-    //             crossAxisAlignment: CrossAxisAlignment.start,
-    //             children: [
-    //               const CircleAvatar(
-    //                 radius: 36,
-    //                 backgroundColor: Colors.white,
-    //                 child: CircleAvatar(
-    //                   radius: 34,
-    //                   backgroundImage:
-    //                       NetworkImage('https://i.pravatar.cc/100?u=ryunosuke'),
-    //                 ),
-    //               ),
-    //               const SizedBox(
-    //                 width: 20,
-    //               ),
-    //               Padding(
-    //                 padding: const EdgeInsets.only(top: 10),
-    //                 child: Column(
-    //                   mainAxisAlignment: MainAxisAlignment.start,
-    //                   crossAxisAlignment: CrossAxisAlignment.start,
-    //                   children: [
-    //                     SizedBox(
-    //                       width: MediaQuery.of(context).size.width * 0.55,
-    //                       child: const Text(
-    //                         'Drs. Ryunosuke Putra Alam',
-    //                         style: TextStyle(
-    //                           fontSize: 16,
-    //                           fontWeight: FontWeight.bold,
-    //                           overflow: TextOverflow.ellipsis,
-    //                         ),
-    //                       ),
-    //                     ),
-    //                     const SizedBox(
-    //                       height: 10,
-    //                     ),
-    //                     SizedBox(
-    //                       width: MediaQuery.of(context).size.width * 0.33,
-    //                       child: const Text(
-    //                         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni excepturi omnis velit! Laborum voluptates dignissimos quis ipsum. Nisi, soluta hic.',
-    //                         style: TextStyle(
-    //                           color: Colors.grey,
-    //                           overflow: TextOverflow.ellipsis,
-    //                         ),
-    //                       ),
-    //                     ),
-    //                   ],
-    //                 ),
-    //               )
-    //             ],
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ],
-    // );
   }
 }

@@ -3,7 +3,6 @@ import 'package:halotax/models/user_model.dart';
 import 'package:halotax/pages/chat_page.dart';
 import 'package:halotax/pages/chatsection_page.dart';
 import 'package:halotax/pages/login_page.dart';
-import 'package:halotax/pages/signin_page.dart';
 import 'package:halotax/pages/statuschat_page.dart';
 
 import 'home_page.dart';

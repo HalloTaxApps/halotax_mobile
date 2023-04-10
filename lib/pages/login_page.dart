@@ -17,7 +17,13 @@ class _LoginPageState extends State<LoginPage> {
   GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future siginFunction() async {
+  bool isLogin = true;
+  String? errorMessage = '';
+
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
+
+  Future googleSigninFunction() async {
     GoogleSignInAccount? googleUser = await googleSignIn.signIn();
     if (googleUser == null) {
       return;
@@ -42,6 +48,59 @@ class _LoginPageState extends State<LoginPage> {
         'image': userCredential.user!.photoURL,
         'uid': userCredential.user!.uid,
         'date': DateTime.now(),
+        'role': 'Customer'
+      });
+    }
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const MyApp()),
+        (route) => false);
+  }
+
+  Future signinEmailFunction() async {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+            email: _controllerEmail.text, password: _controllerPassword.text);
+
+    DocumentSnapshot userExist =
+        await firestore.collection('users').doc(userCredential.user!.uid).get();
+
+    if (userExist.exists) {
+      // print("User already exist in database");
+    } else {
+      await firestore.collection('users').doc(userCredential.user!.uid).set({
+        'email': userCredential.user!.email,
+        'name': 'faiz',
+        'image': 'assets/images/hijabWork.jpg',
+        'uid': userCredential.user!.uid,
+        'date': DateTime.now(),
+        'role': 'Customer'
+      });
+    }
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const MyApp()),
+        (route) => false);
+  }
+
+  Future createEmailFunction() async {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+            email: _controllerEmail.text, password: _controllerPassword.text);
+
+    DocumentSnapshot userExist =
+        await firestore.collection('users').doc(userCredential.user!.uid).get();
+
+    if (userExist.exists) {
+      // print("User already exist in database");
+    } else {
+      await firestore.collection('users').doc(userCredential.user!.uid).set({
+        'email': userCredential.user!.email,
+        'name': 'faiz',
+        'image': 'assets/images/hijabWork.jpg',
+        'uid': userCredential.user!.uid,
+        'date': DateTime.now(),
+        'role': 'Customer'
       });
     }
     Navigator.pushAndRemoveUntil(
@@ -105,6 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextField(
+                        controller: _controllerEmail,
                         decoration: InputDecoration(
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10),
@@ -129,6 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 20,
                       ),
                       TextField(
+                        controller: _controllerPassword,
                         decoration: InputDecoration(
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10),
@@ -155,14 +216,21 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: const Text(
-                          'Don\'t have an account?',
-                          style: TextStyle(
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.all(0),
+                          foregroundColor: Colors.black,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isLogin = !isLogin;
+                          });
+                        },
+                        child: Text(
+                          isLogin
+                              ? 'Don\'t have an account?'
+                              : 'Already have an account?',
+                          style: const TextStyle(
                             fontSize: 12,
                             color: Colors.black54,
                           ),
@@ -181,11 +249,15 @@ class _LoginPageState extends State<LoginPage> {
                       child: SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            isLogin
+                                ? await signinEmailFunction()
+                                : await createEmailFunction();
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.deepOrange,
                           ),
-                          child: const Text('Log In'),
+                          child: Text(isLogin ? 'Log In' : 'Sign In'),
                         ),
                       ),
                     ),
@@ -207,7 +279,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: ElevatedButton(
                         onPressed: () async {
-                          await siginFunction();
+                          await googleSigninFunction();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey[300],

@@ -73,7 +73,7 @@ class ChatSectionPage extends StatelessWidget {
                   if (snapshot.hasData) {
                     if (snapshot.data.docs.length < 1) {
                       return const Center(
-                        child: Text('Say Hi'),
+                        child: Text('No Messages'),
                       );
                     }
                     return ListView.builder(

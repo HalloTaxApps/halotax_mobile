@@ -46,6 +46,7 @@ class StatusChatPage extends StatelessWidget {
             children: const [
               Text(
                 'Premium',
+                // user.role,
               ),
               SizedBox(
                 width: 20,

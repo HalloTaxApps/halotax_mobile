@@ -74,7 +74,6 @@ class _ChatsectionTexfieldState extends State<ChatsectionTexfield> {
                 'last_msg': message,
               });
             });
-
             await FirebaseFirestore.instance
                 .collection('users')
                 .doc(widget.friendId)

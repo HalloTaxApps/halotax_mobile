@@ -6,6 +6,7 @@ class UserModel {
   String image;
   Timestamp date;
   String uid;
+  String role;
 
   UserModel({
     required this.email,
@@ -13,6 +14,7 @@ class UserModel {
     required this.image,
     required this.date,
     required this.uid,
+    required this.role,
   });
 
   factory UserModel.fromJson(DocumentSnapshot snapshot) {
@@ -22,6 +24,7 @@ class UserModel {
       image: snapshot['image'],
       date: snapshot['date'],
       uid: snapshot['uid'],
+      role: snapshot['role'],
     );
   }
 }

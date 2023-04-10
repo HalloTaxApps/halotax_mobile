@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:halotax/pages/chatsection_page.dart';
+import 'package:halotax/pages/consultant_page.dart';
 import 'package:halotax/pages/home_page.dart';
 import 'package:halotax/pages/login_page.dart';
 import 'package:halotax/pages/main_page.dart';
-import 'package:halotax/pages/signin_page.dart';
 import 'package:halotax/pages/splash_screen.dart';
 
 import 'models/user_model.dart';
@@ -25,15 +25,20 @@ class MyApp extends StatelessWidget {
 
   Future<Widget> userSignIn() async {
     User? user = FirebaseAuth.instance.currentUser;
+    // FirebaseAuth.instance.signOut();
     if (user != null) {
       DocumentSnapshot userData = await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
           .get();
       UserModel userModel = UserModel.fromJson(userData);
-      return HomePage(
-        user: userModel,
-      );
+      return userModel.role == 'Customer'
+          ? HomePage(
+              user: userModel,
+            )
+          : ConsultantPage(
+              user: userModel,
+            );
     } else {
       return const LoginPage();
     }
