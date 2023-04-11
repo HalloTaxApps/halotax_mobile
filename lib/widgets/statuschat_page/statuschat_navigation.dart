@@ -5,19 +5,20 @@ class NavigationStatuschat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color indexAktif = Colors.deepOrange;
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         GestureDetector(
-          child: Text(
+          child: const Text(
             'Berlangsung',
-            style: TextStyle(color: indexAktif),
+            style: TextStyle(color: Colors.black),
           ),
         ),
         GestureDetector(
-          child: const Text('Menunggu'),
+          child: const Text(
+            'Menunggu',
+            style: TextStyle(color: Colors.deepOrange),
+          ),
         ),
         GestureDetector(
           child: const Text('Selesai'),

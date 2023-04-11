@@ -129,9 +129,13 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: ChatpageTextfield(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: ChatpageTextfield(
+              user: widget.user,
+              currentId: '',
+              friendId: '',
+            ),
           ),
         ],
       ),

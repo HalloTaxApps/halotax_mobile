@@ -33,57 +33,60 @@ class _BerlangsungPageState extends State<BerlangsungPage> {
             itemBuilder: (context, index) {
               var friendId = snapshot.data!.docs[index].id;
               var lastMsg = snapshot.data!.docs[index]['last_msg'];
-              return FutureBuilder(
-                future: FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(friendId)
-                    .get(),
-                builder: (context, AsyncSnapshot asyncSnapshot) {
-                  if (asyncSnapshot.hasData) {
-                    var friend = asyncSnapshot.data;
-                    return friend['role'] == 'Consultant'
-                        ? ListTile(
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(80),
-                              child: CachedNetworkImage(
-                                imageUrl: friend['image'],
-                                placeholder: (context, url) =>
-                                    const CircularProgressIndicator(),
-                                height: 50,
-                              ),
-                            ),
-                            title: Text(friend['name']),
-                            subtitle: Text(
-                              "$lastMsg",
-                              // '',
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ChatSectionPage(
-                                    currentUser: widget.user,
-                                    friendId: friendId,
-                                    friendName: friend['name'],
-                                    friendImage: friend['image'],
+              var status = snapshot.data!.docs[index]['status'];
+              return status != 'new'
+                  ? FutureBuilder(
+                      future: FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(friendId)
+                          .get(),
+                      builder: (context, AsyncSnapshot asyncSnapshot) {
+                        if (asyncSnapshot.hasData) {
+                          var friend = asyncSnapshot.data;
+                          return friend['role'] == 'Consultant'
+                              ? ListTile(
+                                  leading: ClipRRect(
+                                    borderRadius: BorderRadius.circular(80),
+                                    child: CachedNetworkImage(
+                                      imageUrl: friend['image'],
+                                      placeholder: (context, url) =>
+                                          const CircularProgressIndicator(),
+                                      height: 50,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          )
-                        : const SizedBox();
-                  }
-                  return const LinearProgressIndicator(
-                    color: Colors.transparent,
-                    backgroundColor: Colors.transparent,
-                    minHeight: 1,
-                  );
-                },
-              );
+                                  title: Text(friend['name']),
+                                  subtitle: Text(
+                                    "$lastMsg",
+                                    // '',
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ChatSectionPage(
+                                          currentUser: widget.user,
+                                          friendId: friendId,
+                                          friendName: friend['name'],
+                                          friendImage: friend['image'],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                )
+                              : const SizedBox();
+                        }
+                        return const LinearProgressIndicator(
+                          color: Colors.transparent,
+                          backgroundColor: Colors.transparent,
+                          minHeight: 1,
+                        );
+                      },
+                    )
+                  : const SizedBox();
             },
           );
         }
