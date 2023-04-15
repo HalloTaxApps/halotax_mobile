@@ -17,11 +17,8 @@ class _NewChatPageState extends State<NewChatPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection('users')
-          .doc(widget.user.uid)
-          .collection('messages')
-          .snapshots(),
+      stream:
+          FirebaseFirestore.instance.collectionGroup('messages').snapshots(),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!.docs.isEmpty) {
@@ -47,28 +44,28 @@ class _NewChatPageState extends State<NewChatPage> {
                 child: ListView.builder(
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
-                    var friendId = snapshot.data!.docs[index].id;
+                    var userId = snapshot.data!.docs[index]['senderId'];
                     var lastMsg = snapshot.data!.docs[index]['last_msg'];
                     return FutureBuilder(
                       future: FirebaseFirestore.instance
                           .collection('users')
-                          .doc(friendId)
+                          .doc(userId)
                           .get(),
                       builder: (context, AsyncSnapshot asyncSnapshot) {
                         if (asyncSnapshot.hasData) {
-                          var friend = asyncSnapshot.data;
-                          return friend['role'] == 'Customer'
+                          var user = asyncSnapshot.data;
+                          return user['role'] == 'Customer'
                               ? ListTile(
                                   leading: ClipRRect(
                                     borderRadius: BorderRadius.circular(80),
                                     child: CachedNetworkImage(
-                                      imageUrl: friend['image'],
+                                      imageUrl: user['image'],
                                       placeholder: (context, url) =>
                                           const CircularProgressIndicator(),
                                       height: 50,
                                     ),
                                   ),
-                                  title: Text(friend['name']),
+                                  title: Text(user['name']),
                                   subtitle: Text(
                                     "$lastMsg",
                                     // '',
@@ -83,9 +80,9 @@ class _NewChatPageState extends State<NewChatPage> {
                                       MaterialPageRoute(
                                         builder: (context) => ChatSectionPage(
                                           currentUser: widget.user,
-                                          friendId: friendId,
-                                          friendName: friend['name'],
-                                          friendImage: friend['image'],
+                                          friendId: userId,
+                                          friendName: user['name'],
+                                          friendImage: user['image'],
                                         ),
                                       ),
                                     );

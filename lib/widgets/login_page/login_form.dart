@@ -51,6 +51,7 @@ class _LoginpageFormState extends State<LoginpageForm> {
 
   @override
   Widget build(BuildContext context) {
+    bool isPassword = true;
     return Column(
       children: [
         TextField(
@@ -74,10 +75,17 @@ class _LoginpageFormState extends State<LoginpageForm> {
           ),
         ),
         TextField(
+          obscureText: !isPassword,
+          obscuringCharacter: '*',
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-            suffixIcon: GestureDetector(
-              child: const Icon(
+            suffixIcon: IconButton(
+              onPressed: () {
+                setState(() {
+                  isPassword = !isPassword;
+                });
+              },
+              icon: const Icon(
                 Icons.remove_red_eye_outlined,
                 color: Colors.grey,
               ),

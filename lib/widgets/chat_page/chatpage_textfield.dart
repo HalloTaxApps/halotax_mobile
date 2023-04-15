@@ -67,6 +67,7 @@ class _ChatpageTextfieldState extends State<ChatpageTextfield> {
                     'status': 'new',
                     'type': 'user',
                     'last_msg': message,
+                    'senderId': widget.user.uid,
                   });
                   // ignore: use_build_context_synchronously
                   Navigator.pushReplacement(

@@ -52,7 +52,7 @@ class _MenungguPageState extends State<MenungguPage> {
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(80),
                               child: CachedNetworkImage(
-                                imageUrl: 'https://random.imagecdn.app/500/150',
+                                imageUrl: widget.user.image,
                                 // imageUrl: friend['image'],
                                 placeholder: (context, url) =>
                                     const CircularProgressIndicator(),
@@ -61,7 +61,7 @@ class _MenungguPageState extends State<MenungguPage> {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            // title: Text(friend['name']),
+                            title: const Text('You'),
                             subtitle: Text(
                               "$lastMsg",
                               // '',
@@ -73,29 +73,6 @@ class _MenungguPageState extends State<MenungguPage> {
                           )
                         : const SizedBox();
                   }
-                  return ListTile(
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(80),
-                      child: CachedNetworkImage(
-                        imageUrl: 'https://random.imagecdn.app/500/150',
-                        // imageUrl: friend['image'],
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        height: 50,
-                        width: 50,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    // title: Text(friend['name']),
-                    subtitle: Text(
-                      "$lastMsg",
-                      // '',
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  );
                   return const LinearProgressIndicator(
                     color: Colors.transparent,
                     backgroundColor: Colors.transparent,
