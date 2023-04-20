@@ -11,14 +11,15 @@ import '../main.dart';
 
 class ConsultantPage extends StatefulWidget {
   final UserModel user;
-  const ConsultantPage({super.key, required this.user});
+  final int indexLuar;
+  const ConsultantPage({super.key, required this.user, this.indexLuar = 0});
 
   @override
   State<ConsultantPage> createState() => _ConsultantPageState();
 }
 
 class _ConsultantPageState extends State<ConsultantPage> {
-  int _selectedIndex = 0;
+  late int _selectedIndex = widget.indexLuar;
 
   void _onTap(int index) {
     setState(() {

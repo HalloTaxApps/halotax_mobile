@@ -23,8 +23,10 @@ class _BottomNavbarState extends State<BottomNavbar> {
   void _onTap(int index) {
     _selectedIndex = index;
     setState(() {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => pages[_selectedIndex]));
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => pages[_selectedIndex]),
+          (route) => false);
     });
   }
 

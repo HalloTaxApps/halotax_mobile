@@ -14,12 +14,14 @@ class ChatSectionPage extends StatelessWidget {
   final String friendId;
   final String friendName;
   final String friendImage;
+  final String msgId;
   const ChatSectionPage(
       {super.key,
       required this.currentUser,
       required this.friendId,
       required this.friendName,
-      required this.friendImage});
+      required this.friendImage,
+      required this.msgId});
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,7 @@ class ChatSectionPage extends StatelessWidget {
                     .collection('users')
                     .doc(currentUser.uid)
                     .collection('messages')
-                    .doc(friendId)
+                    .doc(msgId)
                     .collection('chats')
                     .orderBy('date', descending: true)
                     .snapshots(),
@@ -106,6 +108,7 @@ class ChatSectionPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: ChatsectionTexfield(
+                msgId: msgId,
                 user: currentUser,
                 currentId: currentUser.uid,
                 friendId: friendId,

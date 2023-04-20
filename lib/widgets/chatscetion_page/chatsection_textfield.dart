@@ -6,11 +6,14 @@ class ChatsectionTexfield extends StatefulWidget {
   final UserModel user;
   final String currentId;
   final String friendId;
-  const ChatsectionTexfield(
-      {super.key,
-      required this.user,
-      required this.currentId,
-      required this.friendId});
+  final String msgId;
+  const ChatsectionTexfield({
+    super.key,
+    required this.user,
+    required this.currentId,
+    required this.friendId,
+    required this.msgId,
+  });
 
   @override
   State<ChatsectionTexfield> createState() => _ChatsectionTexfieldState();
@@ -57,7 +60,7 @@ class _ChatsectionTexfieldState extends State<ChatsectionTexfield> {
                 .collection('users')
                 .doc(widget.currentId)
                 .collection('messages')
-                .doc(widget.friendId)
+                .doc(widget.msgId)
                 .collection('chats')
                 .add({
               'senderId': widget.currentId,
@@ -69,8 +72,8 @@ class _ChatsectionTexfieldState extends State<ChatsectionTexfield> {
                   .collection('users')
                   .doc(widget.currentId)
                   .collection('messages')
-                  .doc(widget.friendId)
-                  .set({
+                  .doc(widget.msgId)
+                  .update({
                 'last_msg': message,
               });
             });
@@ -78,7 +81,7 @@ class _ChatsectionTexfieldState extends State<ChatsectionTexfield> {
                 .collection('users')
                 .doc(widget.friendId)
                 .collection('messages')
-                .doc(widget.currentId)
+                .doc(widget.msgId)
                 .collection('chats')
                 .add({
               'senderId': widget.currentId,
@@ -91,8 +94,8 @@ class _ChatsectionTexfieldState extends State<ChatsectionTexfield> {
                   .collection('users')
                   .doc(widget.friendId)
                   .collection('messages')
-                  .doc(widget.currentId)
-                  .set({
+                  .doc(widget.msgId)
+                  .update({
                 'last_msg': message,
               });
             });

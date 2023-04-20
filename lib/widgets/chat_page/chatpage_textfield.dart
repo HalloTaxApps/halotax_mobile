@@ -6,13 +6,10 @@ import '../../models/user_model.dart';
 
 class ChatpageTextfield extends StatefulWidget {
   final UserModel user;
-  final String currentId;
-  final String friendId;
-  const ChatpageTextfield(
-      {super.key,
-      required this.user,
-      required this.currentId,
-      required this.friendId});
+  const ChatpageTextfield({
+    super.key,
+    required this.user,
+  });
 
   @override
   State<ChatpageTextfield> createState() => _ChatpageTextfieldState();
@@ -68,6 +65,8 @@ class _ChatpageTextfieldState extends State<ChatpageTextfield> {
                     'type': 'user',
                     'last_msg': message,
                     'senderId': widget.user.uid,
+                    'receiverId': 'a',
+                    'msgId': 'a',
                   });
                   // ignore: use_build_context_synchronously
                   Navigator.pushReplacement(

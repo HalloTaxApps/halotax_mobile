@@ -31,10 +31,11 @@ class _BerlangsungPageState extends State<BerlangsungPage> {
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              var friendId = snapshot.data!.docs[index].id;
+              var friendId = snapshot.data!.docs[index]['receiverId'];
               var lastMsg = snapshot.data!.docs[index]['last_msg'];
-              var status = snapshot.data!.docs[index]['status'];
-              return status != 'new'
+              var msgStatus = snapshot.data!.docs[index]['status'];
+              var messageId = snapshot.data!.docs[index].id;
+              return msgStatus == 'on'
                   ? FutureBuilder(
                       future: FirebaseFirestore.instance
                           .collection('users')
@@ -68,6 +69,7 @@ class _BerlangsungPageState extends State<BerlangsungPage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => ChatSectionPage(
+                                          msgId: messageId,
                                           currentUser: widget.user,
                                           friendId: friendId,
                                           friendName: friend['name'],

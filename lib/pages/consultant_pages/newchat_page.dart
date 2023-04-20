@@ -2,6 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
+import 'package:halotax/pages/consultant_page.dart';
+import 'package:halotax/pages/consultant_pages/ongoingchat_page.dart';
+import 'package:quickalert/quickalert.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 import '../chatsection_page.dart';
 
@@ -44,17 +48,21 @@ class _NewChatPageState extends State<NewChatPage> {
                 child: ListView.builder(
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
-                    var userId = snapshot.data!.docs[index]['senderId'];
+                    var senderId = snapshot.data!.docs[index]['senderId'];
                     var lastMsg = snapshot.data!.docs[index]['last_msg'];
+                    var msgStatus = snapshot.data!.docs[index]['status'];
+                    var msgType = snapshot.data!.docs[index]['type'];
+                    var messageId = snapshot.data!.docs[index].id;
                     return FutureBuilder(
                       future: FirebaseFirestore.instance
                           .collection('users')
-                          .doc(userId)
+                          .doc(senderId)
                           .get(),
                       builder: (context, AsyncSnapshot asyncSnapshot) {
                         if (asyncSnapshot.hasData) {
                           var user = asyncSnapshot.data;
-                          return user['role'] == 'Customer'
+                          return user['role'] == 'Customer' &&
+                                  msgStatus == 'new'
                               ? ListTile(
                                   leading: ClipRRect(
                                     borderRadius: BorderRadius.circular(80),
@@ -74,19 +82,87 @@ class _NewChatPageState extends State<NewChatPage> {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ChatSectionPage(
-                                          currentUser: widget.user,
-                                          friendId: userId,
-                                          friendName: user['name'],
-                                          friendImage: user['image'],
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                  trailing: IconButton(
+                                    icon: const Icon(
+                                      Icons.check,
+                                      color: Colors.green,
+                                      size: 30,
+                                    ),
+                                    onPressed: () {
+                                      QuickAlert.show(
+                                        context: context,
+                                        barrierDismissible: true,
+                                        type: QuickAlertType.warning,
+                                        showCancelBtn: true,
+                                        title: 'Accept this message?',
+                                        confirmBtnText: 'Yes',
+                                        cancelBtnText: 'No',
+                                        confirmBtnColor: Colors.red,
+                                        onConfirmBtnTap: () async {
+                                          await FirebaseFirestore.instance
+                                              .collection('users')
+                                              .doc(widget.user.uid)
+                                              .collection('messages')
+                                              .doc(messageId)
+                                              .collection('chats')
+                                              .add({
+                                            'senderId': senderId,
+                                            'receiverId': widget.user.uid,
+                                            'message': lastMsg,
+                                            'date': DateTime.now(),
+                                          }).then((value) => {
+                                                    FirebaseFirestore.instance
+                                                        .collection('users')
+                                                        .doc(widget.user.uid)
+                                                        .collection('messages')
+                                                        .doc(messageId)
+                                                        .set({
+                                                      'last_msg': lastMsg,
+                                                      'senderId': senderId,
+                                                      'status': 'on',
+                                                      'type': msgType,
+                                                      'receiverId':
+                                                          widget.user.uid
+                                                    })
+                                                  });
+                                          await FirebaseFirestore.instance
+                                              .collection('users')
+                                              .doc(senderId)
+                                              .collection('messages')
+                                              .doc(messageId)
+                                              .collection('chats')
+                                              .add({
+                                            'senderId': senderId,
+                                            'receiverId': widget.user.uid,
+                                            'message': lastMsg,
+                                            'date': DateTime.now(),
+                                          }).then((value) => {
+                                                    FirebaseFirestore.instance
+                                                        .collection('users')
+                                                        .doc(senderId)
+                                                        .collection('messages')
+                                                        .doc(messageId)
+                                                        .update({
+                                                      'status': 'on',
+                                                      'receiverId':
+                                                          widget.user.uid,
+                                                    })
+                                                  });
+                                          // ignore: use_build_context_synchronously
+                                          Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ConsultantPage(
+                                                  user: widget.user,
+                                                  indexLuar: 1,
+                                                ),
+                                              ),
+                                              (route) => false);
+                                        },
+                                      );
+                                    },
+                                  ),
                                 )
                               : const SizedBox();
                         }
