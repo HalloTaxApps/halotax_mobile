@@ -14,6 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool isObscure = false;
   GoogleSignIn googleSignIn = GoogleSignIn();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -70,8 +71,10 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       await firestore.collection('users').doc(userCredential.user!.uid).set({
         'email': userCredential.user!.email,
-        'name': 'faiz',
-        'image': 'assets/images/hijabWork.jpg',
+        // Dummy Name
+        'name': 'User',
+        // Dummy Image
+        'image': 'https://cdn-icons-png.flaticon.com/512/180/180691.png',
         'uid': userCredential.user!.uid,
         'date': DateTime.now(),
         'role': 'Customer'
@@ -194,10 +197,15 @@ class _LoginPageState extends State<LoginPage> {
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 10),
                           suffixIcon: GestureDetector(
-                            child: const Icon(
+                            child: Icon(
                               Icons.remove_red_eye_outlined,
-                              color: Colors.grey,
+                              color: isObscure ? Colors.grey : Colors.red,
                             ),
+                            onTap: () {
+                              setState(() {
+                                isObscure = !isObscure;
+                              });
+                            },
                           ),
                           hintText: 'Password',
                           enabledBorder: OutlineInputBorder(
@@ -215,6 +223,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
+                        obscureText: isObscure ? true : false,
                       ),
                       TextButton(
                         style: TextButton.styleFrom(

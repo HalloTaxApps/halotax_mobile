@@ -3,11 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
 import 'package:halotax/pages/consultant_page.dart';
-import 'package:halotax/pages/consultant_pages/ongoingchat_page.dart';
 import 'package:quickalert/quickalert.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
-
-import '../chatsection_page.dart';
 
 class NewChatPage extends StatefulWidget {
   final UserModel user;
@@ -26,8 +22,26 @@ class _NewChatPageState extends State<NewChatPage> {
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!.docs.isEmpty) {
-            return const Center(
-              child: Text('No chats available'),
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text(
+                    'New Available Chats',
+                    style: TextStyle(
+                      color: Colors.grey[800],
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const Expanded(
+                  child: Center(
+                    child: Text('No chats available'),
+                  ),
+                ),
+              ],
             );
           }
           return Column(
@@ -150,7 +164,9 @@ class _NewChatPageState extends State<NewChatPage> {
                                                     })
                                                   });
                                           // ignore: use_build_context_synchronously
-                                          Navigator.pushAndRemoveUntil(
+                                          Navigator.pop(context);
+                                          // ignore: use_build_context_synchronously
+                                          Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
@@ -158,8 +174,7 @@ class _NewChatPageState extends State<NewChatPage> {
                                                   user: widget.user,
                                                   indexLuar: 1,
                                                 ),
-                                              ),
-                                              (route) => false);
+                                              ));
                                         },
                                       );
                                     },
