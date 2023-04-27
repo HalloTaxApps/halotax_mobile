@@ -6,9 +6,11 @@ import '../../models/user_model.dart';
 
 class ChatpageTextfield extends StatefulWidget {
   final UserModel user;
+  final String userType;
   const ChatpageTextfield({
     super.key,
     required this.user,
+    required this.userType,
   });
 
   @override
@@ -17,7 +19,6 @@ class ChatpageTextfield extends StatefulWidget {
 
 class _ChatpageTextfieldState extends State<ChatpageTextfield> {
   final TextEditingController _controller = TextEditingController();
-  // final bool isUSer = true;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -62,11 +63,10 @@ class _ChatpageTextfieldState extends State<ChatpageTextfield> {
                       .collection('messages')
                       .add({
                     'status': 'new',
-                    'type': 'user',
+                    'type': widget.userType,
                     'last_msg': message,
                     'senderId': widget.user.uid,
-                    'receiverId': 'a',
-                    'msgId': 'a',
+                    'receiverId': '',
                   });
                   // ignore: use_build_context_synchronously
                   Navigator.pushReplacement(

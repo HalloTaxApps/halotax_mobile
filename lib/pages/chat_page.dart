@@ -15,8 +15,8 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  late List<String> _status = ['Anonymous', widget.user.name];
-  late String _dropDownStatus = _status.first;
+  late List<String> status = ['Anonymous', widget.user.name];
+  late String _dropDownStatus = status.first;
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +103,7 @@ class _ChatPageState extends State<ChatPage> {
                     value: _dropDownStatus,
                     icon: const Icon(Icons.arrow_drop_down),
                     elevation: 16,
-                    items: _status
+                    items: status
                         .map<DropdownMenuItem<String>>(
                             (value) => DropdownMenuItem<String>(
                                 value: value,
@@ -132,6 +132,7 @@ class _ChatPageState extends State<ChatPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: ChatpageTextfield(
+              userType: _dropDownStatus,
               user: widget.user,
             ),
           ),

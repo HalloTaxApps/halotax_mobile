@@ -3,6 +3,7 @@ import 'package:halotax/models/user_model.dart';
 import 'package:halotax/pages/chat_page.dart';
 import 'package:halotax/pages/statuschat_pages/berlangsung_page.dart';
 import 'package:halotax/pages/statuschat_pages/menunggu_page.dart';
+import 'package:halotax/pages/statuschat_pages/selesai_page.dart';
 import 'package:halotax/widgets/statuschat_page/statuschat_appbar.dart';
 import 'package:halotax/widgets/statuschat_page/statuschat_navigation.dart';
 import 'package:halotax/widgets/statuschat_page/statuschat_searchbox.dart';
@@ -29,10 +30,7 @@ class _StatusChatPageState extends State<StatusChatPage> {
   late List<Widget> pages = [
     BerlangsungPage(user: widget.user),
     MenungguPage(user: widget.user),
-    const Center(
-      child: Text('Selesai Page'),
-    )
-    // BerlangsungPage(user: widget.user),
+    SelesaiPage(user: widget.user),
   ];
 
   @override

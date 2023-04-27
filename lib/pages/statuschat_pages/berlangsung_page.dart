@@ -74,6 +74,7 @@ class _BerlangsungPageState extends State<BerlangsungPage> {
                                           friendId: friendId,
                                           friendName: friend['name'],
                                           friendImage: friend['image'],
+                                          msgStatus: msgStatus,
                                         ),
                                       ),
                                     );

@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../../models/user_model.dart';
-import '../chatsection_page.dart';
 
 class MenungguPage extends StatefulWidget {
   final UserModel user;
@@ -34,8 +32,6 @@ class _MenungguPageState extends State<MenungguPage> {
             itemBuilder: (context, index) {
               var messageId = snapshot.data!.docs[index].id;
               var lastMsg = snapshot.data!.docs[index]['last_msg'];
-              // var status = snapshot.data!.docs[index]['status'];
-              // var type = snapshot.data!.docs[index]['type'];
               return FutureBuilder(
                 future: FirebaseFirestore.instance
                     .collection('users')
@@ -45,15 +41,15 @@ class _MenungguPageState extends State<MenungguPage> {
                     .get(),
                 builder: (context, AsyncSnapshot asyncSnapshot) {
                   if (asyncSnapshot.hasData) {
-                    // var friend = asyncSnapshot.data;
                     var messages = asyncSnapshot.data;
                     return messages['status'] == 'new'
                         ? ListTile(
                             leading: ClipRRect(
                               borderRadius: BorderRadius.circular(80),
                               child: CachedNetworkImage(
-                                imageUrl: widget.user.image,
-                                // imageUrl: friend['image'],
+                                imageUrl: messages['type'] == 'Anonymous'
+                                    ? 'https://cdn-icons-png.flaticon.com/512/180/180691.png'
+                                    : widget.user.image,
                                 placeholder: (context, url) =>
                                     const CircularProgressIndicator(),
                                 height: 50,
@@ -61,10 +57,9 @@ class _MenungguPageState extends State<MenungguPage> {
                                 fit: BoxFit.cover,
                               ),
                             ),
-                            title: const Text('You'),
+                            title: Text(messages['type']),
                             subtitle: Text(
                               "$lastMsg",
-                              // '',
                               style: const TextStyle(
                                 color: Colors.grey,
                                 overflow: TextOverflow.ellipsis,

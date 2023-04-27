@@ -67,16 +67,17 @@ class _NewChatPageState extends State<NewChatPage> {
                                   leading: ClipRRect(
                                     borderRadius: BorderRadius.circular(80),
                                     child: CachedNetworkImage(
-                                      imageUrl: user['image'],
+                                      imageUrl: msgType == 'Anonymous'
+                                          ? 'https://cdn-icons-png.flaticon.com/512/180/180691.png'
+                                          : user['image'],
                                       placeholder: (context, url) =>
                                           const CircularProgressIndicator(),
                                       height: 50,
                                     ),
                                   ),
-                                  title: Text(user['name']),
+                                  title: Text(msgType),
                                   subtitle: Text(
                                     "$lastMsg",
-                                    // '',
                                     style: const TextStyle(
                                       color: Colors.grey,
                                       overflow: TextOverflow.ellipsis,

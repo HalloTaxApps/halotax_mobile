@@ -68,13 +68,16 @@ class _OngoingChatPageState extends State<OngoingChatPage> {
                                   leading: ClipRRect(
                                     borderRadius: BorderRadius.circular(80),
                                     child: CachedNetworkImage(
-                                      imageUrl: user['image'],
+                                      fit: BoxFit.cover,
+                                      imageUrl: msgType == 'Anonymous'
+                                          ? 'https://cdn-icons-png.flaticon.com/512/180/180691.png'
+                                          : user['image'],
                                       placeholder: (context, url) =>
                                           const CircularProgressIndicator(),
                                       height: 50,
                                     ),
                                   ),
-                                  title: Text(user['name']),
+                                  title: Text(msgType),
                                   subtitle: Text(
                                     "$lastMsg",
                                     // '',
@@ -85,7 +88,7 @@ class _OngoingChatPageState extends State<OngoingChatPage> {
                                   ),
                                   trailing: IconButton(
                                     icon: const Icon(
-                                      Icons.delete,
+                                      Icons.stop_circle_outlined,
                                       color: Colors.red,
                                       size: 30,
                                     ),
@@ -93,9 +96,9 @@ class _OngoingChatPageState extends State<OngoingChatPage> {
                                       QuickAlert.show(
                                         context: context,
                                         barrierDismissible: true,
-                                        type: QuickAlertType.warning,
+                                        type: QuickAlertType.error,
                                         showCancelBtn: true,
-                                        title: 'Accept this message?',
+                                        title: 'Stop this message?',
                                         confirmBtnText: 'Yes',
                                         cancelBtnText: 'No',
                                         confirmBtnColor: Colors.red,
@@ -106,22 +109,14 @@ class _OngoingChatPageState extends State<OngoingChatPage> {
                                               .collection('messages')
                                               .doc(messageId)
                                               .update({
-                                            'status': 'on',
-                                            'receiverId': widget.user.uid
+                                            'status': 'done',
                                           });
                                           FirebaseFirestore.instance
                                               .collection('users')
                                               .doc(widget.user.uid)
                                               .collection('messages')
                                               .doc(messageId)
-                                              .set({
-                                            'last_msg': lastMsg,
-                                            'senderId': senderId,
-                                            'status': 'on',
-                                            'type': msgType,
-                                            'receiverId': widget.user.uid,
-                                            'msgId': messageId,
-                                          });
+                                              .delete();
                                           Navigator.pushAndRemoveUntil(
                                               context,
                                               MaterialPageRoute(
@@ -146,6 +141,7 @@ class _OngoingChatPageState extends State<OngoingChatPage> {
                                                   friendName: user['name'],
                                                   friendImage: user['image'],
                                                   msgId: messageId,
+                                                  msgStatus: msgType,
                                                 )));
                                   },
                                 )
