@@ -12,29 +12,36 @@ import '../widgets/bottomnavbar.dart';
 
 class StatusChatPage extends StatefulWidget {
   final UserModel user;
-  const StatusChatPage({super.key, required this.user});
+  final int bodyIndex;
+  final String searchKey;
+  const StatusChatPage(
+      {super.key, required this.user, this.bodyIndex = 0, this.searchKey = ''});
 
   @override
   State<StatusChatPage> createState() => _StatusChatPageState();
 }
 
 class _StatusChatPageState extends State<StatusChatPage> {
-  int _selectedIndex = 0;
+  late int _selectedIndex = widget.bodyIndex;
 
-  void _onTap(int index) {
+  void onTap(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
   late List<Widget> pages = [
-    BerlangsungPage(user: widget.user),
+    BerlangsungPage(
+      user: widget.user,
+      searchKey: widget.searchKey,
+    ),
     MenungguPage(user: widget.user),
     SelesaiPage(user: widget.user),
   ];
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController searchController = TextEditingController();
     return Scaffold(
       bottomNavigationBar: BottomNavbar(
         user: widget.user,
@@ -83,13 +90,49 @@ class _StatusChatPageState extends State<StatusChatPage> {
           const SizedBox(
             height: 20,
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: SearchBoxStatuschat(),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20),
+          // child: TextField(
+          //   controller: searchController,
+          //   decoration: InputDecoration(
+          //     hintText: 'Cari',
+          //     suffixIcon: IconButton(
+          //       icon: const Icon(
+          //         Icons.search_outlined,
+          //         color: Colors.deepOrange,
+          //         size: 32,
+          //       ),
+          //       onPressed: () {
+          //         Navigator.pushReplacement(
+          //             context,
+          //             MaterialPageRoute(
+          //                 builder: (context) => StatusChatPage(
+          //                       user: widget.user,
+          //                       bodyIndex: _selectedIndex,
+          //                       searchKey: searchController.text,
+          //                     )));
+          //       },
+          //     ),
+          //     enabledBorder: OutlineInputBorder(
+          //       borderRadius: BorderRadius.circular(10),
+          //       borderSide: const BorderSide(
+          //         color: Colors.deepOrange,
+          //         width: 2,
+          //       ),
+          //     ),
+          //     focusedBorder: OutlineInputBorder(
+          //       borderRadius: BorderRadius.circular(10),
+          //       borderSide: const BorderSide(
+          //         color: Colors.orange,
+          //         width: 2,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

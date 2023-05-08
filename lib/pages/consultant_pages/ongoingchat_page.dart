@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
-import 'package:quickalert/quickalert.dart';
 
 import '../chatsection_page.dart';
 import '../consultant_page.dart';
@@ -111,44 +110,29 @@ class _OngoingChatPageState extends State<OngoingChatPage> {
                                       size: 30,
                                     ),
                                     onPressed: () {
-                                      QuickAlert.show(
-                                        context: context,
-                                        barrierDismissible: true,
-                                        type: QuickAlertType.error,
-                                        showCancelBtn: true,
-                                        title: 'Stop this message?',
-                                        confirmBtnText: 'Yes',
-                                        cancelBtnText: 'No',
-                                        confirmBtnColor: Colors.red,
-                                        onConfirmBtnTap: () {
-                                          FirebaseFirestore.instance
-                                              .collection('users')
-                                              .doc(senderId)
-                                              .collection('messages')
-                                              .doc(messageId)
-                                              .update({
-                                            'status': 'done',
-                                          });
-                                          FirebaseFirestore.instance
-                                              .collection('users')
-                                              .doc(widget.user.uid)
-                                              .collection('messages')
-                                              .doc(messageId)
-                                              .delete();
-                                          // ignore: use_build_context_synchronously
-                                          Navigator.pop(context);
-                                          // ignore: use_build_context_synchronously
-                                          Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ConsultantPage(
-                                                  user: widget.user,
-                                                  indexLuar: 1,
-                                                ),
-                                              ));
-                                        },
-                                      );
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(senderId)
+                                          .collection('messages')
+                                          .doc(messageId)
+                                          .update({
+                                        'status': 'done',
+                                      });
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(widget.user.uid)
+                                          .collection('messages')
+                                          .doc(messageId)
+                                          .delete();
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ConsultantPage(
+                                              user: widget.user,
+                                              indexLuar: 1,
+                                            ),
+                                          ));
                                     },
                                   ),
                                   onTap: () {

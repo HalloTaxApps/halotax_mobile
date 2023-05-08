@@ -6,7 +6,8 @@ import 'package:halotax/pages/chatsection_page.dart';
 
 class BerlangsungPage extends StatefulWidget {
   final UserModel user;
-  const BerlangsungPage({super.key, required this.user});
+  final String searchKey;
+  const BerlangsungPage({super.key, required this.user, this.searchKey = ''});
 
   @override
   State<BerlangsungPage> createState() => _BerlangsungPageState();
@@ -20,6 +21,7 @@ class _BerlangsungPageState extends State<BerlangsungPage> {
           .collection('users')
           .doc(widget.user.uid)
           .collection('messages')
+          // .where('name', isEqualTo: widget.searchKey)
           .snapshots(),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {

@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
 import 'package:halotax/pages/consultant_page.dart';
-import 'package:quickalert/quickalert.dart';
 
 class NewChatPage extends StatefulWidget {
   final UserModel user;
@@ -104,79 +103,64 @@ class _NewChatPageState extends State<NewChatPage> {
                                       size: 30,
                                     ),
                                     onPressed: () {
-                                      QuickAlert.show(
-                                        context: context,
-                                        barrierDismissible: true,
-                                        type: QuickAlertType.warning,
-                                        showCancelBtn: true,
-                                        title: 'Accept this message?',
-                                        confirmBtnText: 'Yes',
-                                        cancelBtnText: 'No',
-                                        confirmBtnColor: Colors.red,
-                                        onConfirmBtnTap: () async {
-                                          await FirebaseFirestore.instance
-                                              .collection('users')
-                                              .doc(widget.user.uid)
-                                              .collection('messages')
-                                              .doc(messageId)
-                                              .collection('chats')
-                                              .add({
-                                            'senderId': senderId,
-                                            'receiverId': widget.user.uid,
-                                            'message': lastMsg,
-                                            'date': DateTime.now(),
-                                          }).then((value) => {
-                                                    FirebaseFirestore.instance
-                                                        .collection('users')
-                                                        .doc(widget.user.uid)
-                                                        .collection('messages')
-                                                        .doc(messageId)
-                                                        .set({
-                                                      'last_msg': lastMsg,
-                                                      'senderId': senderId,
-                                                      'status': 'on',
-                                                      'type': msgType,
-                                                      'receiverId':
-                                                          widget.user.uid
-                                                    })
-                                                  });
-                                          await FirebaseFirestore.instance
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(widget.user.uid)
+                                          .collection('messages')
+                                          .doc(messageId)
+                                          .collection('chats')
+                                          .add({
+                                        'senderId': senderId,
+                                        'receiverId': widget.user.uid,
+                                        'message': lastMsg,
+                                        'date': DateTime.now(),
+                                      }).then((value) => {
+                                                FirebaseFirestore.instance
+                                                    .collection('users')
+                                                    .doc(widget.user.uid)
+                                                    .collection('messages')
+                                                    .doc(messageId)
+                                                    .set({
+                                                  'last_msg': lastMsg,
+                                                  'senderId': senderId,
+                                                  'status': 'on',
+                                                  'type': msgType,
+                                                  'receiverId': widget.user.uid
+                                                })
+                                              });
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(senderId)
+                                          .collection('messages')
+                                          .doc(messageId)
+                                          .collection('chats')
+                                          .add({
+                                        'senderId': senderId,
+                                        'receiverId': widget.user.uid,
+                                        'message': lastMsg,
+                                        'date': DateTime.now(),
+                                      }).then(
+                                        (value) => {
+                                          FirebaseFirestore.instance
                                               .collection('users')
                                               .doc(senderId)
                                               .collection('messages')
                                               .doc(messageId)
-                                              .collection('chats')
-                                              .add({
-                                            'senderId': senderId,
+                                              .update({
+                                            'status': 'on',
                                             'receiverId': widget.user.uid,
-                                            'message': lastMsg,
-                                            'date': DateTime.now(),
-                                          }).then((value) => {
-                                                    FirebaseFirestore.instance
-                                                        .collection('users')
-                                                        .doc(senderId)
-                                                        .collection('messages')
-                                                        .doc(messageId)
-                                                        .update({
-                                                      'status': 'on',
-                                                      'receiverId':
-                                                          widget.user.uid,
-                                                    })
-                                                  });
-                                          // ignore: use_build_context_synchronously
-                                          Navigator.pop(context);
-                                          // ignore: use_build_context_synchronously
-                                          Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ConsultantPage(
-                                                  user: widget.user,
-                                                  indexLuar: 1,
-                                                ),
-                                              ));
+                                          })
                                         },
                                       );
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ConsultantPage(
+                                              user: widget.user,
+                                              indexLuar: 1,
+                                            ),
+                                          ));
                                     },
                                   ),
                                 )
