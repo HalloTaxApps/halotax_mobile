@@ -65,7 +65,40 @@ class ProfilePage extends StatelessWidget {
               ProfileContainer(
                 user: user,
               ),
-              const ProfileFitur(),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                height: 75,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black87,
+                      offset: Offset(0, 0.5),
+                      blurRadius: 1.0,
+                    ),
+                  ],
+                  color: Colors.white,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: const [
+                      Expanded(
+                        child: Text(
+                          'Kelola Langganan Premium',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_outlined,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           )
         ],

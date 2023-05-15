@@ -9,7 +9,8 @@ class ProfileContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(20),
-      height: 200,
+      padding: const EdgeInsets.all(5),
+      height: 150,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         boxShadow: const [
@@ -123,35 +124,6 @@ class ProfileContainer extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  width: 1,
-                  color: Colors.grey,
-                ),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: const [
-                  Icon(
-                    Icons.shield_moon_outlined,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'Verifikasi berkas anda',
-                    style: TextStyle(
-                      color: Colors.red,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
         ],
       ),
     );
