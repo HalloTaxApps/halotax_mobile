@@ -43,6 +43,8 @@ dependencies:
   cloud_firestore: ^4.4.5
   cached_network_image: ^3.2.3
   quickalert: ^1.0.1
+  http: ^0.13.6
+  webview_flutter: ^4.0.1
 
 dev_dependencies:
   flutter_test:

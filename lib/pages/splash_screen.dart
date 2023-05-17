@@ -6,7 +6,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:halotax/main.dart';
 import '../models/user_model.dart';
 import 'login_page.dart';
-import 'main_page.dart';
 
 class LayarSplash extends StatefulWidget {
   const LayarSplash({super.key});

@@ -1,74 +1,129 @@
 import 'package:flutter/material.dart';
+import 'package:halotax/services/news_api.dart';
 
-class PromoHome extends StatelessWidget {
+import '../../pages/news_view.dart';
+
+class PromoHome extends StatefulWidget {
   const PromoHome({super.key});
 
   @override
+  State<PromoHome> createState() => _PromoHomeState();
+}
+
+class _PromoHomeState extends State<PromoHome> {
+  @override
   Widget build(BuildContext context) {
-    return ListView(
-      scrollDirection: Axis.horizontal,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(right: 10),
-          width: 340,
-          height: 170,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(10),
-            image: const DecorationImage(
-              image: NetworkImage(
-                'https://source.unsplash.com/1200x400?tax',
-              ),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(right: 10),
-          width: 340,
-          height: 170,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(10),
-            image: const DecorationImage(
-              image: NetworkImage(
-                'https://source.unsplash.com/1200x400?office',
-              ),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(right: 10),
-          width: 340,
-          height: 170,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(10),
-            image: const DecorationImage(
-              image: NetworkImage(
-                'https://source.unsplash.com/1200x400?tower',
-              ),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(right: 10),
-          width: 340,
-          height: 170,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(10),
-            image: const DecorationImage(
-              image: NetworkImage(
-                'https://source.unsplash.com/1200x400?handshake',
-              ),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-      ],
+    NewsApi newsApi = NewsApi();
+
+    return FutureBuilder(
+      future: newsApi.fetchNews(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final articles = snapshot.data;
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 5,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  NewsView(article: articles[index])));
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      width: 340,
+                      height: 170,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black,
+                            offset: Offset(0, 1),
+                            blurRadius: 1.5,
+                          ),
+                        ],
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            articles![index].urlToImage,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              width: double.infinity,
+                              height: 75,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.8),
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10),
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          articles[0].title,
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            overflow: TextOverflow.ellipsis,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        articles[0].publishedAt,
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 12,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  SizedBox(
+                                    child: Text(
+                                      articles[0].description,
+                                      style: const TextStyle(
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }

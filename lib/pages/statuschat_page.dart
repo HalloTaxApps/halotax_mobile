@@ -8,14 +8,20 @@ import 'package:halotax/widgets/statuschat_page/statuschat_appbar.dart';
 import 'package:halotax/widgets/statuschat_page/statuschat_navigation.dart';
 import 'package:halotax/widgets/statuschat_page/statuschat_searchbox.dart';
 
+import '../services/news_api.dart';
 import '../widgets/bottomnavbar.dart';
 
 class StatusChatPage extends StatefulWidget {
   final UserModel user;
   final int bodyIndex;
   final String searchKey;
+  final NewsApi newsApi;
   const StatusChatPage(
-      {super.key, required this.user, this.bodyIndex = 0, this.searchKey = ''});
+      {super.key,
+      required this.user,
+      this.bodyIndex = 0,
+      this.searchKey = '',
+      required this.newsApi});
 
   @override
   State<StatusChatPage> createState() => _StatusChatPageState();
@@ -45,13 +51,17 @@ class _StatusChatPageState extends State<StatusChatPage> {
     return Scaffold(
       bottomNavigationBar: BottomNavbar(
         user: widget.user,
+        newsApi: widget.newsApi,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ChatPage(user: widget.user)));
+                  builder: (context) => ChatPage(
+                        user: widget.user,
+                        newsApi: widget.newsApi,
+                      )));
         },
         backgroundColor: Colors.deepOrange,
         child: const Icon(
@@ -90,49 +100,50 @@ class _StatusChatPageState extends State<StatusChatPage> {
           const SizedBox(
             height: 20,
           ),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 20),
-          // child: TextField(
-          //   controller: searchController,
-          //   decoration: InputDecoration(
-          //     hintText: 'Cari',
-          //     suffixIcon: IconButton(
-          //       icon: const Icon(
-          //         Icons.search_outlined,
-          //         color: Colors.deepOrange,
-          //         size: 32,
-          //       ),
-          //       onPressed: () {
-          //         Navigator.pushReplacement(
-          //             context,
-          //             MaterialPageRoute(
-          //                 builder: (context) => StatusChatPage(
-          //                       user: widget.user,
-          //                       bodyIndex: _selectedIndex,
-          //                       searchKey: searchController.text,
-          //                     )));
-          //       },
-          //     ),
-          //     enabledBorder: OutlineInputBorder(
-          //       borderRadius: BorderRadius.circular(10),
-          //       borderSide: const BorderSide(
-          //         color: Colors.deepOrange,
-          //         width: 2,
-          //       ),
-          //     ),
-          //     focusedBorder: OutlineInputBorder(
-          //       borderRadius: BorderRadius.circular(10),
-          //       borderSide: const BorderSide(
-          //         color: Colors.orange,
-          //         width: 2,
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // ),
-          // const SizedBox(
-          //   height: 20,
-          // ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: TextField(
+              controller: searchController,
+              decoration: InputDecoration(
+                hintText: 'Cari',
+                suffixIcon: IconButton(
+                  icon: const Icon(
+                    Icons.search_outlined,
+                    color: Colors.deepOrange,
+                    size: 32,
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => StatusChatPage(
+                                  user: widget.user,
+                                  bodyIndex: _selectedIndex,
+                                  searchKey: searchController.text,
+                                  newsApi: widget.newsApi,
+                                )));
+                  },
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                    color: Colors.deepOrange,
+                    width: 2,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                    color: Colors.orange,
+                    width: 2,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

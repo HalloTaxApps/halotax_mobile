@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
 import 'package:halotax/pages/chat_page.dart';
-import 'package:halotax/pages/main_page.dart';
+
+import '../../services/news_api.dart';
 
 class AboutHome extends StatefulWidget {
   final UserModel user;
-  const AboutHome({super.key, required this.user});
+  final NewsApi newsApi;
+  const AboutHome({super.key, required this.user, required this.newsApi});
 
   @override
   State<AboutHome> createState() => _AboutHomeState();
@@ -63,6 +65,7 @@ class _AboutHomeState extends State<AboutHome> {
                 MaterialPageRoute(
                     builder: (context) => ChatPage(
                           user: widget.user,
+                          newsApi: widget.newsApi,
                         )));
           },
           style: ElevatedButton.styleFrom(

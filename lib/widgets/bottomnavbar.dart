@@ -4,6 +4,7 @@ import 'package:halotax/models/user_model.dart';
 import 'package:halotax/pages/education_page.dart';
 import 'package:halotax/pages/news_page.dart';
 import 'package:halotax/pages/statuschat_page.dart';
+import 'package:halotax/services/news_api.dart';
 
 import '../pages/chat_page.dart';
 import '../pages/home_page.dart';
@@ -11,7 +12,8 @@ import '../pages/profile_page.dart';
 
 class BottomNavbar extends StatefulWidget {
   final UserModel user;
-  const BottomNavbar({super.key, required this.user});
+  final NewsApi newsApi;
+  const BottomNavbar({super.key, required this.user, required this.newsApi});
 
   @override
   State<BottomNavbar> createState() => _BottomNavbarState();
@@ -33,18 +35,23 @@ class _BottomNavbarState extends State<BottomNavbar> {
   late List<Widget> pages = [
     HomePage(
       user: widget.user,
+      newsApi: widget.newsApi,
     ),
     NewsPage(
+      newsApi: widget.newsApi,
       user: widget.user,
     ),
     StatusChatPage(
       user: widget.user,
+      newsApi: widget.newsApi,
     ),
     EducationPage(
       user: widget.user,
+      newsApi: widget.newsApi,
     ),
     ProfilePage(
       user: widget.user,
+      newsApi: widget.newsApi,
     ),
   ];
 

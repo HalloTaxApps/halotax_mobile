@@ -2,20 +2,22 @@ import "package:flutter/material.dart";
 import 'package:halotax/models/user_model.dart';
 import 'package:halotax/widgets/bottomnavbar.dart';
 import 'package:halotax/widgets/home_page/about_home.dart';
-import 'package:halotax/widgets/home_page/home_appbar.dart';
-import 'package:halotax/widgets/home_page/list_fitur_home.dart';
 import 'package:halotax/widgets/home_page/other_home.dart';
 import 'package:halotax/widgets/home_page/promo_home.dart';
 
+import '../services/news_api.dart';
+
 class HomePage extends StatelessWidget {
   final UserModel user;
-  const HomePage({super.key, required this.user});
+  final NewsApi newsApi;
+  const HomePage({super.key, required this.user, required this.newsApi});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavbar(
         user: user,
+        newsApi: newsApi,
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -65,6 +67,7 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 child: AboutHome(
                   user: user,
+                  newsApi: newsApi,
                 ),
               ),
               Container(
@@ -77,7 +80,7 @@ class HomePage extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.only(bottom: 20),
                           child: const Text(
-                            'Promo Menarik',
+                            'Berita Menarik',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
@@ -105,7 +108,7 @@ class HomePage extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.only(bottom: 20),
                           child: const Text(
-                            'Jasa Lainnya',
+                            'Cari Tahu Tentang',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
@@ -117,7 +120,10 @@ class HomePage extends StatelessWidget {
                     SizedBox(
                       height: 150,
                       width: MediaQuery.of(context).size.width,
-                      child: const OtherHome(),
+                      child: OtherHome(
+                        newsApi: newsApi,
+                        user: user,
+                      ),
                     ),
                   ],
                 ),

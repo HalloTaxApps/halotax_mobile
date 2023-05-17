@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:halotax/pages/statuschat_page.dart';
 
 import '../../models/user_model.dart';
+import '../../services/news_api.dart';
 
 class ChatpageTextfield extends StatefulWidget {
   final UserModel user;
   final String userType;
+  final NewsApi newsApi;
   const ChatpageTextfield({
     super.key,
     required this.user,
     required this.userType,
+    required this.newsApi,
   });
 
   @override
@@ -72,7 +75,10 @@ class _ChatpageTextfieldState extends State<ChatpageTextfield> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => StatusChatPage(user: widget.user),
+                      builder: (context) => StatusChatPage(
+                        user: widget.user,
+                        newsApi: widget.newsApi,
+                      ),
                     ),
                   );
                 },

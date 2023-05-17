@@ -1,149 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:halotax/models/user_model.dart';
+import 'package:halotax/services/news_api.dart';
+
+import '../../pages/materi_page.dart';
 
 class OtherHome extends StatelessWidget {
-  const OtherHome({super.key});
+  final UserModel user;
+  final NewsApi newsApi;
+  const OtherHome({super.key, required this.user, required this.newsApi});
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return ListView.builder(
       scrollDirection: Axis.horizontal,
-      children: [
-        Column(
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        return Column(
           children: [
-            Container(
-              margin: const EdgeInsets.only(right: 10),
-              width: 150,
-              height: 100,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
-                  image: NetworkImage(
-                      'https://source.unsplash.com/600x400?worker'),
-                  fit: BoxFit.cover,
+            GestureDetector(
+              onTap: () => {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MateriPage(
+                              newsApi: newsApi,
+                              user: user,
+                            )))
+              },
+              child: Container(
+                margin: const EdgeInsets.only(right: 10),
+                width: 150,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(10),
+                  image: const DecorationImage(
+                    image: NetworkImage(
+                        'https://source.unsplash.com/600x400?study'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
             const Padding(
               padding: EdgeInsets.only(top: 5),
               child: Text(
-                'Orang Dalam',
+                'Judul Materi',
                 style: TextStyle(
                   fontSize: 16,
                 ),
               ),
             ),
           ],
-        ),
-        Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(right: 10),
-              width: 150,
-              height: 100,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
-                  image:
-                      NetworkImage('https://source.unsplash.com/600x400?pay'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top: 5),
-              child: Text(
-                'Orang Dalam',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ],
-        ),
-        Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(right: 10),
-              width: 150,
-              height: 100,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
-                  image:
-                      NetworkImage('https://source.unsplash.com/600x400?payer'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top: 5),
-              child: Text(
-                'Orang Dalam',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ],
-        ),
-        Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(right: 10),
-              width: 150,
-              height: 100,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
-                  image: NetworkImage(
-                      'https://source.unsplash.com/600x400?lawyer'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top: 5),
-              child: Text(
-                'Orang Dalam',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ],
-        ),
-        Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(right: 10),
-              width: 150,
-              height: 100,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
-                  image: NetworkImage(
-                      'https://source.unsplash.com/600x400?reader'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top: 5),
-              child: Text(
-                'Orang Dalam',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
+        );
+      },
     );
   }
 }

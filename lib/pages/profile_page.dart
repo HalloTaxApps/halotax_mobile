@@ -7,17 +7,20 @@ import 'package:halotax/widgets/profile_page/profile_fitur.dart';
 
 import '../main.dart';
 import '../models/user_model.dart';
+import '../services/news_api.dart';
 import '../widgets/bottomnavbar.dart';
 
 class ProfilePage extends StatelessWidget {
   final UserModel user;
-  const ProfilePage({super.key, required this.user});
+  final NewsApi newsApi;
+  const ProfilePage({super.key, required this.user, required this.newsApi});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavbar(
         user: user,
+        newsApi: newsApi,
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
