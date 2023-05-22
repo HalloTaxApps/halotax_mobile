@@ -35,7 +35,7 @@ class _PromoHomeState extends State<PromoHome> {
                                   NewsView(article: articles[index])));
                     },
                     child: Container(
-                      margin: const EdgeInsets.only(right: 10),
+                      margin: const EdgeInsets.only(left: 20),
                       width: 340,
                       height: 170,
                       decoration: BoxDecoration(
@@ -49,6 +49,7 @@ class _PromoHomeState extends State<PromoHome> {
                           ),
                         ],
                         image: DecorationImage(
+                          onError: (exception, stackTrace) {},
                           image: NetworkImage(
                             articles![index].urlToImage,
                           ),

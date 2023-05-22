@@ -28,7 +28,7 @@ class OtherHome extends StatelessWidget {
                             )))
               },
               child: Container(
-                margin: const EdgeInsets.only(right: 10),
+                margin: const EdgeInsets.only(left: 20),
                 width: 150,
                 height: 100,
                 decoration: BoxDecoration(

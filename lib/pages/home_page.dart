@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import "package:flutter/material.dart";
 import 'package:halotax/models/user_model.dart';
 import 'package:halotax/widgets/bottomnavbar.dart';
@@ -14,124 +15,130 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavbar(
-        user: user,
-        newsApi: newsApi,
-      ),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.deepOrange,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.white,
-              child: CircleAvatar(
-                radius: 18,
-                backgroundImage: NetworkImage(user.image),
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .snapshots(),
+        builder: (context, AsyncSnapshot snapshot) {
+          var userSnapshot = snapshot.data;
+          if (snapshot.hasData) {
+            return Scaffold(
+              bottomNavigationBar: BottomNavbar(
+                user: user,
+                newsApi: newsApi,
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: Colors.deepOrange,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const Text(
-                      'Welcome, ',
-                      style: TextStyle(fontSize: 16),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      child: Text(
-                        user.name,
-                        style: const TextStyle(fontSize: 16),
-                        overflow: TextOverflow.ellipsis,
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Colors.white,
+                      child: CircleAvatar(
+                        radius: 18,
+                        backgroundImage: NetworkImage(userSnapshot['image']),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-      body: ListView(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(20),
-                child: AboutHome(
-                  user: user,
-                  newsApi: newsApi,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 20, right: 10),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: const Text(
-                            'Berita Menarik',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Welcome, ',
+                              style: TextStyle(fontSize: 16),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      child: const PromoHome(),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(
-                    top: 10, bottom: 10, left: 20, right: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: const Text(
-                            'Cari Tahu Tentang',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              child: Text(
+                                userSnapshot['name'],
+                                style: const TextStyle(fontSize: 16),
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 150,
-                      width: MediaQuery.of(context).size.width,
-                      child: OtherHome(
-                        newsApi: newsApi,
-                        user: user,
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
-            ],
-          )
-        ],
-      ),
-    );
+              body: ListView(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        child: AboutHome(
+                          user: user,
+                          newsApi: newsApi,
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(bottom: 20, left: 20),
+                                child: const Text(
+                                  'Berita Menarik',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 200,
+                            width: MediaQuery.of(context).size.width,
+                            child: const PromoHome(),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(bottom: 20, left: 20),
+                                child: const Text(
+                                  'Cari Tahu Tentang',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 150,
+                            width: MediaQuery.of(context).size.width,
+                            child: OtherHome(
+                              newsApi: newsApi,
+                              user: user,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            );
+          } else {
+            return const SizedBox();
+          }
+        });
   }
 }

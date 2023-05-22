@@ -258,7 +258,6 @@ class _EditProfileState extends State<EditProfile> {
                                   .update({
                                 'name': _nameController.text,
                               });
-                              setState(() {});
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.deepOrange,
