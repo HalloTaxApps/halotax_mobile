@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
+import 'package:halotax/pages/editprofile_pafge.dart';
+import 'package:halotax/services/news_api.dart';
 
 class ProfileContainer extends StatelessWidget {
   final UserModel user;
-  const ProfileContainer({super.key, required this.user});
+  final NewsApi newsApi;
+  const ProfileContainer(
+      {super.key, required this.user, required this.newsApi});
 
   @override
   Widget build(BuildContext context) {
@@ -105,22 +109,31 @@ class ProfileContainer extends StatelessWidget {
                   ),
                 ],
               ),
-              Column(
-                children: const [
-                  Icon(
-                    Icons.settings_outlined,
-                    color: Colors.grey,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Settings',
-                    style: TextStyle(
-                      fontSize: 16,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              EditProfile(user: user, newsApi: newsApi)));
+                },
+                child: Column(
+                  children: const [
+                    Icon(
+                      Icons.settings_outlined,
+                      color: Colors.grey,
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Settings',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

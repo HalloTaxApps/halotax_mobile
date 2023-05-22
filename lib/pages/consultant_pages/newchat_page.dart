@@ -3,10 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
 import 'package:halotax/pages/consultant_page.dart';
+import 'package:halotax/services/news_api.dart';
 
 class NewChatPage extends StatefulWidget {
   final UserModel user;
-  const NewChatPage({super.key, required this.user});
+  final NewsApi newsApi;
+  const NewChatPage({super.key, required this.user, required this.newsApi});
 
   @override
   State<NewChatPage> createState() => _NewChatPageState();
@@ -159,6 +161,7 @@ class _NewChatPageState extends State<NewChatPage> {
                                                 ConsultantPage(
                                               user: widget.user,
                                               indexLuar: 1,
+                                              newsApi: widget.newsApi,
                                             ),
                                           ));
                                     },

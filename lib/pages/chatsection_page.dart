@@ -1,10 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
-import 'package:halotax/widgets/chatscetion_page/chatsection_appbar.dart';
-import 'package:halotax/widgets/chatscetion_page/chatsection_chat.dart';
 import 'package:halotax/widgets/chatscetion_page/chatsection_textfield.dart';
 
 import '../widgets/chatscetion_page/single_message.dart';

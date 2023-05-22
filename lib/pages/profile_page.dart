@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:halotax/widgets/profile_page/profile_appbar.dart';
 import 'package:halotax/widgets/profile_page/profile_container.dart';
-import 'package:halotax/widgets/profile_page/profile_fitur.dart';
 
 import '../main.dart';
 import '../models/user_model.dart';
@@ -67,6 +65,7 @@ class ProfilePage extends StatelessWidget {
             children: [
               ProfileContainer(
                 user: user,
+                newsApi: newsApi,
               ),
               Container(
                 margin:

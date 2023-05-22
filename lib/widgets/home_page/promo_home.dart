@@ -77,7 +77,7 @@ class _PromoHomeState extends State<PromoHome> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          articles[0].title,
+                                          articles[index].title,
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             overflow: TextOverflow.ellipsis,
@@ -86,7 +86,7 @@ class _PromoHomeState extends State<PromoHome> {
                                         ),
                                       ),
                                       Text(
-                                        articles[0].publishedAt,
+                                        articles[index].publishedAt,
                                         style: const TextStyle(
                                           color: Colors.grey,
                                           fontSize: 12,
@@ -99,11 +99,11 @@ class _PromoHomeState extends State<PromoHome> {
                                   ),
                                   SizedBox(
                                     child: Text(
-                                      articles[0].description,
+                                      articles[index].description,
                                       style: const TextStyle(
                                         overflow: TextOverflow.ellipsis,
                                       ),
-                                      maxLines: 2,
+                                      maxLines: 1,
                                     ),
                                   ),
                                 ],

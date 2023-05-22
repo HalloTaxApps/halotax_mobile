@@ -2,13 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
+import 'package:halotax/services/news_api.dart';
 
 import '../chatsection_page.dart';
 import '../consultant_page.dart';
 
 class OngoingChatPage extends StatefulWidget {
   final UserModel user;
-  const OngoingChatPage({super.key, required this.user});
+  final NewsApi newsApi;
+  const OngoingChatPage({super.key, required this.user, required this.newsApi});
 
   @override
   State<OngoingChatPage> createState() => _OngoingChatPageState();
@@ -131,6 +133,7 @@ class _OngoingChatPageState extends State<OngoingChatPage> {
                                                 ConsultantPage(
                                               user: widget.user,
                                               indexLuar: 1,
+                                              newsApi: widget.newsApi,
                                             ),
                                           ));
                                     },

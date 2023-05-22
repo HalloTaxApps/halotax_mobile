@@ -5,14 +5,19 @@ import 'package:halotax/models/user_model.dart';
 import 'package:halotax/pages/consultant_pages/consultantprofile_page.dart';
 import 'package:halotax/pages/consultant_pages/newchat_page.dart';
 import 'package:halotax/pages/consultant_pages/ongoingchat_page.dart';
-import 'package:halotax/pages/profile_page.dart';
+import 'package:halotax/services/news_api.dart';
 
 import '../main.dart';
 
 class ConsultantPage extends StatefulWidget {
   final UserModel user;
   final int indexLuar;
-  const ConsultantPage({super.key, required this.user, this.indexLuar = 0});
+  final NewsApi newsApi;
+  const ConsultantPage(
+      {super.key,
+      required this.user,
+      this.indexLuar = 0,
+      required this.newsApi});
 
   @override
   State<ConsultantPage> createState() => _ConsultantPageState();
@@ -28,9 +33,18 @@ class _ConsultantPageState extends State<ConsultantPage> {
   }
 
   late List<Widget> pages = [
-    NewChatPage(user: widget.user),
-    OngoingChatPage(user: widget.user),
-    ConsultantProfilePage(user: widget.user),
+    NewChatPage(
+      user: widget.user,
+      newsApi: widget.newsApi,
+    ),
+    OngoingChatPage(
+      user: widget.user,
+      newsApi: widget.newsApi,
+    ),
+    ConsultantProfilePage(
+      user: widget.user,
+      newsApi: widget.newsApi,
+    ),
   ];
 
   @override

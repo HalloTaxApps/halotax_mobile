@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
             )
           : ConsultantPage(
               user: userModel,
+              newsApi: newsApi,
             );
     } else {
       return const LoginPage();
