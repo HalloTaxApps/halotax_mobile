@@ -3,11 +3,17 @@ import 'package:halotax/models/user_model.dart';
 import 'package:halotax/services/news_api.dart';
 
 import '../../pages/materi_page.dart';
+import '../../services/users_api.dart';
 
 class OtherHome extends StatelessWidget {
   final UserModel user;
   final NewsApi newsApi;
-  const OtherHome({super.key, required this.user, required this.newsApi});
+  final UserApi userApi;
+  const OtherHome(
+      {super.key,
+      required this.user,
+      required this.newsApi,
+      required this.userApi});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +29,7 @@ class OtherHome extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => MateriPage(
+                              userApi: userApi,
                               newsApi: newsApi,
                               user: user,
                             )))

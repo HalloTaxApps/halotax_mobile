@@ -4,11 +4,17 @@ import 'package:halotax/models/user_model.dart';
 import 'package:halotax/pages/editprofile_pafge.dart';
 import 'package:halotax/services/news_api.dart';
 
+import '../../services/users_api.dart';
+
 class ProfileContainer extends StatelessWidget {
   final UserModel user;
   final NewsApi newsApi;
+  final UserApi userApi;
   const ProfileContainer(
-      {super.key, required this.user, required this.newsApi});
+      {super.key,
+      required this.user,
+      required this.newsApi,
+      required this.userApi});
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +132,10 @@ class ProfileContainer extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => EditProfile(
-                                        user: user, newsApi: newsApi)));
+                                          user: user,
+                                          newsApi: newsApi,
+                                          userApi: userApi,
+                                        )));
                           },
                           child: Column(
                             children: const [

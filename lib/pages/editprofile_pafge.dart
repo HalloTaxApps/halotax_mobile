@@ -3,12 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
 import 'package:halotax/services/news_api.dart';
 
+import '../services/users_api.dart';
 import '../widgets/bottomnavbar.dart';
 
 class EditProfile extends StatefulWidget {
   final UserModel user;
   final NewsApi newsApi;
-  const EditProfile({super.key, required this.user, required this.newsApi});
+  final UserApi userApi;
+  const EditProfile(
+      {super.key,
+      required this.user,
+      required this.newsApi,
+      required this.userApi});
 
   @override
   State<EditProfile> createState() => _EditProfileState();
@@ -23,6 +29,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavbar(
+        userApi: widget.userApi,
         user: widget.user,
         newsApi: widget.newsApi,
       ),

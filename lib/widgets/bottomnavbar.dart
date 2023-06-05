@@ -1,19 +1,22 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
 import 'package:halotax/pages/education_page.dart';
 import 'package:halotax/pages/news_page.dart';
 import 'package:halotax/pages/statuschat_page.dart';
 import 'package:halotax/services/news_api.dart';
-
-import '../pages/chat_page.dart';
 import '../pages/home_page.dart';
 import '../pages/profile_page.dart';
+import '../services/users_api.dart';
 
 class BottomNavbar extends StatefulWidget {
   final UserModel user;
   final NewsApi newsApi;
-  const BottomNavbar({super.key, required this.user, required this.newsApi});
+  final UserApi userApi;
+  const BottomNavbar(
+      {super.key,
+      required this.user,
+      required this.newsApi,
+      required this.userApi});
 
   @override
   State<BottomNavbar> createState() => _BottomNavbarState();
@@ -34,22 +37,27 @@ class _BottomNavbarState extends State<BottomNavbar> {
 
   late List<Widget> pages = [
     HomePage(
+      userApi: widget.userApi,
       user: widget.user,
       newsApi: widget.newsApi,
     ),
     NewsPage(
+      userApi: widget.userApi,
       newsApi: widget.newsApi,
       user: widget.user,
     ),
     StatusChatPage(
+      userApi: widget.userApi,
       user: widget.user,
       newsApi: widget.newsApi,
     ),
     EducationPage(
+      userApi: widget.userApi,
       user: widget.user,
       newsApi: widget.newsApi,
     ),
     ProfilePage(
+      userApi: widget.userApi,
       user: widget.user,
       newsApi: widget.newsApi,
     ),

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:halotax/models/source_model.dart';
 
 class Article {

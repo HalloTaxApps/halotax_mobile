@@ -4,11 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
 import 'package:halotax/pages/consultant_page.dart';
 import 'package:halotax/services/news_api.dart';
+import 'package:halotax/services/users_api.dart';
 
 class NewChatPage extends StatefulWidget {
   final UserModel user;
   final NewsApi newsApi;
-  const NewChatPage({super.key, required this.user, required this.newsApi});
+  final UserApi userApi;
+  const NewChatPage(
+      {super.key,
+      required this.user,
+      required this.newsApi,
+      required this.userApi});
 
   @override
   State<NewChatPage> createState() => _NewChatPageState();
@@ -159,6 +165,7 @@ class _NewChatPageState extends State<NewChatPage> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 ConsultantPage(
+                                              userApi: widget.userApi,
                                               user: widget.user,
                                               indexLuar: 1,
                                               newsApi: widget.newsApi,

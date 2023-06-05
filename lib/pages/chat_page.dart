@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
-import 'package:halotax/pages/statuschat_page.dart';
 import 'package:halotax/services/news_api.dart';
-import 'package:halotax/widgets/chat_page/chatpage_appbar.dart';
+import 'package:halotax/services/users_api.dart';
 import 'package:halotax/widgets/chat_page/chatpage_textfield.dart';
 
 import '../widgets/bottomnavbar.dart';
@@ -10,7 +9,12 @@ import '../widgets/bottomnavbar.dart';
 class ChatPage extends StatefulWidget {
   final UserModel user;
   final NewsApi newsApi;
-  const ChatPage({super.key, required this.user, required this.newsApi});
+  final UserApi userApi;
+  const ChatPage(
+      {super.key,
+      required this.user,
+      required this.newsApi,
+      required this.userApi});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -24,6 +28,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavbar(
+        userApi: widget.userApi,
         newsApi: widget.newsApi,
         user: widget.user,
       ),
@@ -135,6 +140,7 @@ class _ChatPageState extends State<ChatPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: ChatpageTextfield(
+              userApi: UserApi(),
               userType: _dropDownStatus,
               user: widget.user,
               newsApi: widget.newsApi,

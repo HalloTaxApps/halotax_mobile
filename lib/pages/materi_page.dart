@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
 
 import '../services/news_api.dart';
+import '../services/users_api.dart';
 import '../widgets/bottomnavbar.dart';
 
 class MateriPage extends StatefulWidget {
   final UserModel user;
   final NewsApi newsApi;
-  const MateriPage({super.key, required this.user, required this.newsApi});
+  final UserApi userApi;
+  const MateriPage(
+      {super.key,
+      required this.user,
+      required this.newsApi,
+      required this.userApi});
 
   @override
   State<MateriPage> createState() => _MateriPageState();
@@ -18,6 +24,7 @@ class _MateriPageState extends State<MateriPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavbar(
+        userApi: widget.userApi,
         user: widget.user,
         newsApi: widget.newsApi,
       ),

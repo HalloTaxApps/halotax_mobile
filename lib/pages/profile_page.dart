@@ -7,12 +7,18 @@ import 'package:halotax/widgets/profile_page/profile_container.dart';
 import '../main.dart';
 import '../models/user_model.dart';
 import '../services/news_api.dart';
+import '../services/users_api.dart';
 import '../widgets/bottomnavbar.dart';
 
 class ProfilePage extends StatelessWidget {
   final UserModel user;
   final NewsApi newsApi;
-  const ProfilePage({super.key, required this.user, required this.newsApi});
+  final UserApi userApi;
+  const ProfilePage(
+      {super.key,
+      required this.user,
+      required this.newsApi,
+      required this.userApi});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +32,7 @@ class ProfilePage extends StatelessWidget {
           if (snapshot.hasData) {
             return Scaffold(
               bottomNavigationBar: BottomNavbar(
+                userApi: userApi,
                 user: user,
                 newsApi: newsApi,
               ),
@@ -74,6 +81,7 @@ class ProfilePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ProfileContainer(
+                        userApi: userApi,
                         user: user,
                         newsApi: newsApi,
                       ),

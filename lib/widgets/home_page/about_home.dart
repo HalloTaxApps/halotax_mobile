@@ -3,11 +3,17 @@ import 'package:halotax/models/user_model.dart';
 import 'package:halotax/pages/chat_page.dart';
 
 import '../../services/news_api.dart';
+import '../../services/users_api.dart';
 
 class AboutHome extends StatefulWidget {
   final UserModel user;
   final NewsApi newsApi;
-  const AboutHome({super.key, required this.user, required this.newsApi});
+  final UserApi userApi;
+  const AboutHome(
+      {super.key,
+      required this.user,
+      required this.newsApi,
+      required this.userApi});
 
   @override
   State<AboutHome> createState() => _AboutHomeState();
@@ -64,6 +70,7 @@ class _AboutHomeState extends State<AboutHome> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => ChatPage(
+                          userApi: widget.userApi,
                           user: widget.user,
                           newsApi: widget.newsApi,
                         )));
@@ -72,7 +79,24 @@ class _AboutHomeState extends State<AboutHome> {
             backgroundColor: Colors.deepOrange,
           ),
           child: const Text('Chat Sekarang'),
-        )
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        // ElevatedButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //             builder: (context) => TestPage(
+        //                   userApi: widget.userApi,
+        //                 )));
+        //   },
+        //   style: ElevatedButton.styleFrom(
+        //     backgroundColor: Colors.deepOrange,
+        //   ),
+        //   child: const Text('Test Page'),
+        // )
       ],
     );
   }

@@ -3,11 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:halotax/models/userAPI_model.dart';
 import 'package:halotax/pages/consultant_page.dart';
 import 'package:halotax/pages/home_page.dart';
 import 'package:halotax/pages/login_page.dart';
 import 'package:halotax/pages/splash_screen.dart';
 import 'package:halotax/services/news_api.dart';
+import 'package:halotax/services/users_api.dart';
 
 import 'models/user_model.dart';
 
@@ -31,14 +33,17 @@ class MyApp extends StatelessWidget {
           .get();
       UserModel userModel = UserModel.fromJson(userData);
       NewsApi newsApi = NewsApi();
+      UserApi userApi = UserApi();
       return userModel.role == 'Customer'
           ? HomePage(
+              userApi: userApi,
               user: userModel,
               newsApi: newsApi,
             )
           : ConsultantPage(
               user: userModel,
               newsApi: newsApi,
+              userApi: userApi,
             );
     } else {
       return const LoginPage();

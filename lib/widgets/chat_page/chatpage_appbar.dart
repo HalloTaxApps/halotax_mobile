@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:halotax/models/user_model.dart';
 import 'package:halotax/pages/statuschat_page.dart';
+import 'package:halotax/services/users_api.dart';
 
 import '../../services/news_api.dart';
 
 class ChatpageAppbar extends StatefulWidget {
   final UserModel user;
   final NewsApi newsApi;
-  const ChatpageAppbar({super.key, required this.user, required this.newsApi});
+  final UserApi userApi;
+  const ChatpageAppbar(
+      {super.key,
+      required this.user,
+      required this.newsApi,
+      required this.userApi});
 
   @override
   State<ChatpageAppbar> createState() => _ChatpageAppbarState();
@@ -49,6 +55,7 @@ class _ChatpageAppbarState extends State<ChatpageAppbar> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => StatusChatPage(
+                          userApi: widget.userApi,
                           user: widget.user,
                           newsApi: widget.newsApi,
                         )));

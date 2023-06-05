@@ -5,11 +5,17 @@ import 'package:halotax/services/news_api.dart';
 import 'package:halotax/widgets/bottomnavbar.dart';
 
 import '../models/article_model.dart';
+import '../services/users_api.dart';
 
 class NewsPage extends StatefulWidget {
   final UserModel user;
   final NewsApi newsApi;
-  const NewsPage({super.key, required this.user, required this.newsApi});
+  final UserApi userApi;
+  const NewsPage(
+      {super.key,
+      required this.user,
+      required this.newsApi,
+      required this.userApi});
 
   @override
   State<NewsPage> createState() => _NewsPageState();
@@ -20,6 +26,7 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: BottomNavbar(
+          userApi: widget.userApi,
           user: widget.user,
           newsApi: widget.newsApi,
         ),

@@ -4,6 +4,7 @@ import 'package:halotax/pages/chat_page.dart';
 import 'package:halotax/pages/statuschat_pages/berlangsung_page.dart';
 import 'package:halotax/pages/statuschat_pages/menunggu_page.dart';
 import 'package:halotax/pages/statuschat_pages/selesai_page.dart';
+import 'package:halotax/services/users_api.dart';
 import 'package:halotax/widgets/statuschat_page/statuschat_appbar.dart';
 import 'package:halotax/widgets/statuschat_page/statuschat_navigation.dart';
 import 'package:halotax/widgets/statuschat_page/statuschat_searchbox.dart';
@@ -16,12 +17,14 @@ class StatusChatPage extends StatefulWidget {
   final int bodyIndex;
   final String searchKey;
   final NewsApi newsApi;
+  final UserApi userApi;
   const StatusChatPage(
       {super.key,
       required this.user,
       this.bodyIndex = 0,
       this.searchKey = '',
-      required this.newsApi});
+      required this.newsApi,
+      required this.userApi});
 
   @override
   State<StatusChatPage> createState() => _StatusChatPageState();
@@ -50,6 +53,7 @@ class _StatusChatPageState extends State<StatusChatPage> {
     TextEditingController searchController = TextEditingController();
     return Scaffold(
       bottomNavigationBar: BottomNavbar(
+        userApi: widget.userApi,
         user: widget.user,
         newsApi: widget.newsApi,
       ),
@@ -59,6 +63,7 @@ class _StatusChatPageState extends State<StatusChatPage> {
               context,
               MaterialPageRoute(
                   builder: (context) => ChatPage(
+                        userApi: widget.userApi,
                         user: widget.user,
                         newsApi: widget.newsApi,
                       )));
@@ -117,6 +122,7 @@ class _StatusChatPageState extends State<StatusChatPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => StatusChatPage(
+                                  userApi: widget.userApi,
                                   user: widget.user,
                                   bodyIndex: _selectedIndex,
                                   searchKey: searchController.text,

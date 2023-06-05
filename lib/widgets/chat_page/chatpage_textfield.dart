@@ -4,16 +4,19 @@ import 'package:halotax/pages/statuschat_page.dart';
 
 import '../../models/user_model.dart';
 import '../../services/news_api.dart';
+import '../../services/users_api.dart';
 
 class ChatpageTextfield extends StatefulWidget {
   final UserModel user;
   final String userType;
   final NewsApi newsApi;
+  final UserApi userApi;
   const ChatpageTextfield({
     super.key,
     required this.user,
     required this.userType,
     required this.newsApi,
+    required this.userApi,
   });
 
   @override
@@ -76,6 +79,7 @@ class _ChatpageTextfieldState extends State<ChatpageTextfield> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => StatusChatPage(
+                        userApi: widget.userApi,
                         user: widget.user,
                         newsApi: widget.newsApi,
                       ),

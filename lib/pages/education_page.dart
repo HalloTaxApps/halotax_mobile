@@ -4,16 +4,23 @@ import 'package:halotax/pages/materi_page.dart';
 import 'package:halotax/widgets/bottomnavbar.dart';
 
 import '../services/news_api.dart';
+import '../services/users_api.dart';
 
 class EducationPage extends StatelessWidget {
   final UserModel user;
   final NewsApi newsApi;
-  const EducationPage({super.key, required this.user, required this.newsApi});
+  final UserApi userApi;
+  const EducationPage(
+      {super.key,
+      required this.user,
+      required this.newsApi,
+      required this.userApi});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavbar(
+        userApi: userApi,
         user: user,
         newsApi: newsApi,
       ),
@@ -71,6 +78,7 @@ class EducationPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => MateriPage(
+                                  userApi: userApi,
                                   newsApi: newsApi,
                                   user: user,
                                 )))

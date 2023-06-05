@@ -6,12 +6,20 @@ import 'package:halotax/widgets/home_page/about_home.dart';
 import 'package:halotax/widgets/home_page/other_home.dart';
 import 'package:halotax/widgets/home_page/promo_home.dart';
 
+import '../models/userAPI_model.dart';
 import '../services/news_api.dart';
+import '../services/users_api.dart';
 
 class HomePage extends StatelessWidget {
   final UserModel user;
   final NewsApi newsApi;
-  const HomePage({super.key, required this.user, required this.newsApi});
+  final UserApi userApi;
+  const HomePage({
+    super.key,
+    required this.user,
+    required this.newsApi,
+    required this.userApi,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +33,7 @@ class HomePage extends StatelessWidget {
           if (snapshot.hasData) {
             return Scaffold(
               bottomNavigationBar: BottomNavbar(
+                userApi: userApi,
                 user: user,
                 newsApi: newsApi,
               ),
@@ -75,6 +84,7 @@ class HomePage extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(20),
                         child: AboutHome(
+                          userApi: userApi,
                           user: user,
                           newsApi: newsApi,
                         ),
@@ -125,6 +135,7 @@ class HomePage extends StatelessWidget {
                             height: 150,
                             width: MediaQuery.of(context).size.width,
                             child: OtherHome(
+                              userApi: userApi,
                               newsApi: newsApi,
                               user: user,
                             ),
